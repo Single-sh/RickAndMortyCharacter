@@ -2,50 +2,51 @@ import UIKit
 
 class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
   enum Props {
-    case initial
-    case loading
+    case beginLoading
     case loaded(Info)
 
     struct Info {
-      struct Button {
-        let enabled: Bool
-        let onTap: () -> ()
-      }
-
-      let pages: Int
       let characters: [CharacterDTO]
-      let nextPages: Button
-      let previous: Button
+      let onLoad: (() -> Void)?
     }
   }
 
-  var props: Props = .initial
+  var props: Props = .beginLoading
+  var characters = [CharacterDTO]()
   func updateProps(_ props: Props) {
     self.props = props
-    collection.reloadData()
-  }
-  override func layoutSubviews() {
-    super.layoutSubviews()
     switch props {
-    case .initial:
-      setupUI()
+    case let .loaded(info):
+      characters += info.characters
+      collection.reloadData()
     default:
       return
     }
   }
 
-  private let collection = UICollectionView(
+  init() {
+    super.init(frame: .zero)
+    setupUI()
+  }
+
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+  }
+
+  private let cellSpace: CGFloat = 20
+  private var collection = UICollectionView(
     frame: .zero,
     collectionViewLayout: UICollectionViewFlowLayout()
   )
 
   private func setupUI() {
-    collection.backgroundColor = .white
+    backgroundColor = .white
+    collection.backgroundColor = .clear
     addSubview(collection)
     collection.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      collection.leadingAnchor.constraint(equalTo: leadingAnchor),
-      collection.rightAnchor.constraint(equalTo: rightAnchor),
+      collection.leadingAnchor.constraint(equalTo: readableContentGuide.leadingAnchor),
+      collection.rightAnchor.constraint(equalTo: readableContentGuide.rightAnchor),
       collection.topAnchor.constraint(equalTo: topAnchor),
       collection.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
@@ -58,23 +59,20 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
   }
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    if case let .loaded(info) = props {
-      return info.characters.count
-    }
-    return 0
+    characters.count
   }
 
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if case let .loaded(info) = props{
-      let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: String(describing: CharacterCollectionViewCell.self),
-        for: indexPath
-      ) as! CharacterCollectionViewCell
-      cell.setInfo(info.characters[indexPath.row])
-      return cell
-    }
-    return UICollectionViewCell()
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: String(describing: CharacterCollectionViewCell.self),
+      for: indexPath
+    ) as! CharacterCollectionViewCell
+    cell.setInfo(characters[indexPath.row])
+    return cell
   }
 
   func collectionView(
@@ -82,7 +80,43 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    return .init(width: 200, height: 200)
+    let columns: CGFloat = traitCollection.horizontalSizeClass == .compact ? 3 : 5
+    let width = collection.frame.width / columns
+    let height = width + (width / 100 * 30)
+    return .init(width: width, height: height)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    .init(top: cellSpace, left: cellSpace, bottom: cellSpace, right: cellSpace)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumLineSpacingForSectionAt section: Int
+  ) -> CGFloat {
+    cellSpace
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumInteritemSpacingForSectionAt section: Int
+  ) -> CGFloat {
+    cellSpace
+  }
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let currentOffset = scrollView.contentOffset.y
+    let height = scrollView.contentSize.height - scrollView.frame.size.height
+    let maxScroll = height / 100 * 80
+    if currentOffset > maxScroll, case let .loaded(info) = props  {
+      info.onLoad?()
+    }
   }
 
 }

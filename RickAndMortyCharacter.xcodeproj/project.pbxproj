@@ -22,6 +22,8 @@
 		FA40C69E2615CD8A00E86BF2 /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40C69D2615CD8A00E86BF2 /* ExtensionView.swift */; };
 		FA40C6AA2616032900E86BF2 /* RickAndMortyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40C6A92616032900E86BF2 /* RickAndMortyService.swift */; };
 		FA40C6AF26160CF100E86BF2 /* PageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40C6AE26160CF100E86BF2 /* PageDTO.swift */; };
+		FAF7F02D2618884200E0B557 /* CharactersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F02C2618884200E0B557 /* CharactersModel.swift */; };
+		FAF7F0322618A57500E0B557 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F0312618A57500E0B557 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		FA40C69D2615CD8A00E86BF2 /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		FA40C6A92616032900E86BF2 /* RickAndMortyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyService.swift; sourceTree = "<group>"; };
 		FA40C6AE26160CF100E86BF2 /* PageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDTO.swift; sourceTree = "<group>"; };
+		FAF7F02C2618884200E0B557 /* CharactersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersModel.swift; sourceTree = "<group>"; };
+		FAF7F0312618A57500E0B557 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +211,7 @@
 				FA40C66F2614A4C400E86BF2 /* CharactersViewController.swift */,
 				FA40C6842614A7CA00E86BF2 /* CharactersView.swift */,
 				FA40C6892614B2E600E86BF2 /* CharacterCollectionViewCell.swift */,
+				FAF7F02C2618884200E0B557 /* CharactersModel.swift */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				FA40C69D2615CD8A00E86BF2 /* ExtensionView.swift */,
+				FAF7F0312618A57500E0B557 /* BaseViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -429,10 +435,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF7F02D2618884200E0B557 /* CharactersModel.swift in Sources */,
 				FA40C68A2614B2E600E86BF2 /* CharacterCollectionViewCell.swift in Sources */,
 				FA40C6AA2616032900E86BF2 /* RickAndMortyService.swift in Sources */,
 				FA40C6702614A4C400E86BF2 /* CharactersViewController.swift in Sources */,
 				FA40C6852614A7CA00E86BF2 /* CharactersView.swift in Sources */,
+				FAF7F0322618A57500E0B557 /* BaseViewController.swift in Sources */,
 				FA40C69E2615CD8A00E86BF2 /* ExtensionView.swift in Sources */,
 				FA40C6AF26160CF100E86BF2 /* PageDTO.swift in Sources */,
 				FA40C6802614A5CB00E86BF2 /* CharacterDTO.swift in Sources */,

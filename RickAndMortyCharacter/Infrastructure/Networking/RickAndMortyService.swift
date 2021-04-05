@@ -42,6 +42,10 @@ extension RickAndMortyService: TargetType {
     return ["Content-type": "application/json"]
   }
 
+  var validationType: ValidationType {
+    return .successCodes
+  }
+
 }
 
 private extension String {

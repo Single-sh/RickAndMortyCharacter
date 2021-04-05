@@ -16,4 +16,8 @@ struct PageDTO: Codable {
     case character = "results"
   }
 
+  static var `default`: PageDTO {
+    PageDTO(info: .init(count: 0, pages: 0, next: nil, prev: nil), character: [])
+  }
+
 }

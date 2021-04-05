@@ -1,36 +1,43 @@
 import UIKit
 import Moya
 
-class CharactersViewController: UIViewController {
+class CharactersViewController: BaseViewController {
   private let contentView = CharactersView()
-  
+  private let model: CharactersModelDelegate
+
+  init(model: CharactersModelDelegate) {
+    self.model = model
+    super.init()
+  }
+
+  override func loadView() {
+    view = contentView
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    view = contentView
+    nextPage()
+  }
 
-    let provider = MoyaProvider<RickAndMortyService>()
-    provider.request(.getPage(page: 1)) { (result) in
+  private func nextPage() {
+    contentView.updateProps(.beginLoading)
+    model.nextPage { [unowned self] result in
       switch result {
-      case let .success(response):
-        do {
-          let page = try JSONDecoder().decode(PageDTO.self, from: response.data)
-          self.updateView(page: page)
-        }
-        catch {
-          // show an error to your user
-        }
+      case let .success(page):
+        updateView(page: page)
       case let .failure(error):
-        print(error.localizedDescription ?? "")
+        print(error.description)
       }
     }
   }
 
   func updateView(page: PageDTO) {
     contentView.updateProps(.loaded(.init(
-      pages: 0,
       characters: page.character,
-      nextPages: .init(enabled: true, onTap: {}),
-      previous: .init(enabled: true, onTap: {})
+      onLoad: page.info.next == nil ? nil : { [unowned self] in
+        contentView.updateProps(.beginLoading)
+        nextPage()
+      }
     )))
   }
 

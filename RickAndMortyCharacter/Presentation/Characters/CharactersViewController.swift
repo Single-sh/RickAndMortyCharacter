@@ -19,6 +19,16 @@ class CharactersViewController: BaseViewController {
     nextPage()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    navigationController?.setNavigationBarHidden(true, animated: animated)
+    super.viewWillAppear(animated)
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    navigationController?.setNavigationBarHidden(false, animated: animated)
+    super.viewWillDisappear(animated)
+  }
+
   private func nextPage() {
     contentView.updateProps(.beginLoading)
     model.nextPage { [unowned self] result in
@@ -37,6 +47,12 @@ class CharactersViewController: BaseViewController {
       onLoad: page.info.next == nil ? nil : { [unowned self] in
         contentView.updateProps(.beginLoading)
         nextPage()
+      },
+      onSelectCell: { [unowned self] character in
+        navigationController?.pushViewController(
+          DetailViewController(character: character),
+          animated: true
+        )
       }
     )))
   }

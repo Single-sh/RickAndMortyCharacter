@@ -20,7 +20,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
 
   func setInfo(_ character: CharacterDTO) {
     title.text = character.name
-    setImage(from: character.image)
+    imageView.setImage(from: character.image)
   }
 
   private func setupUI() {
@@ -50,18 +50,5 @@ class CharacterCollectionViewCell: UICollectionViewCell {
     imageView.contentMode = .scaleAspectFit
     title.numberOfLines = 0
     title.textAlignment = .center
-  }
-
-  private func setImage(from url: String) {
-    guard let imageURL = URL(string: url) else { return }
-
-    DispatchQueue.global().async {
-      guard let imageData = try? Data(contentsOf: imageURL) else { return }
-
-      let image = UIImage(data: imageData)
-      DispatchQueue.main.async {
-        self.imageView.image = image
-      }
-    }
   }
 }

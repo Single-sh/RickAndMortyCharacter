@@ -8,11 +8,13 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     struct Info {
       let characters: [CharacterDTO]
       let onLoad: (() -> Void)?
+      let onSelectCell: ((CharacterDTO) -> Void)
     }
   }
 
   var props: Props = .beginLoading
   var characters = [CharacterDTO]()
+  
   func updateProps(_ props: Props) {
     self.props = props
     switch props {
@@ -73,6 +75,12 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     ) as! CharacterCollectionViewCell
     cell.setInfo(characters[indexPath.row])
     return cell
+  }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if case let .loaded(info) = props  {
+      info.onSelectCell(characters[indexPath.row])
+    }
   }
 
   func collectionView(

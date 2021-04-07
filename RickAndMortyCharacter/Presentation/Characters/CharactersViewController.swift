@@ -31,7 +31,7 @@ class CharactersViewController: BaseViewController {
 
   private func nextPage(_ type: PageType) {
     contentView.updateProps(.beginLoading)
-    model.nextPage(type: type) { [unowned self] result in
+    model.getPage(type: type) { [unowned self] result in
       switch result {
       case let .success(page):
         updateView(page: page, type: type)

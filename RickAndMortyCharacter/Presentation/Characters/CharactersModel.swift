@@ -6,7 +6,7 @@ enum PageType {
   case next
 }
 protocol CharactersModelDelegate {
-  func nextPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ())
+  func getPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ())
 }
 
 class CharactersModel: CharactersModelDelegate {
@@ -17,7 +17,7 @@ class CharactersModel: CharactersModelDelegate {
     provider = MoyaProvider<RickAndMortyService>()
   }
 
-  func nextPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ()) {
+  func getPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ()) {
     switch type {
     case .next:
       page += 1

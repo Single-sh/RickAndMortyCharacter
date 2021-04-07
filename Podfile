@@ -3,6 +3,7 @@
 
 target 'RickAndMortyCharacter' do
   pod 'Moya', '~> 14.0'
+  pod 'Nuke', '~> 9.0'
 
   target 'RickAndMortyCharacterTests' do
     inherit! :search_paths

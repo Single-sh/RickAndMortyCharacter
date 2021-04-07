@@ -1,4 +1,5 @@
 import UIKit
+import Nuke
 
 class CharacterCollectionViewCell: UICollectionViewCell {
   private let imageView = UIImageView()
@@ -20,7 +21,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
 
   func setInfo(_ character: CharacterDTO) {
     title.text = character.name
-    imageView.setImage(from: character.image)
+    Nuke.loadImage(with: URL(string: character.image)!, into: imageView)
   }
 
   private func setupUI() {
@@ -36,7 +37,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
 
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.distribution = .equalSpacing
+    stackView.distribution = .equalCentering
     view.addSubview(stackView)
     stackView.fillSuperview()
     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +48,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
     imageView.layer.cornerRadius = 10
     imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     imageView.layer.masksToBounds = true
-    imageView.contentMode = .scaleAspectFit
+    imageView.contentMode = .scaleAspectFill
     title.numberOfLines = 0
     title.textAlignment = .center
   }

@@ -4,19 +4,23 @@ PODS:
     - Moya/Core (= 14.0.0)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
+  - Nuke (9.5.0)
 
 DEPENDENCIES:
   - Moya (~> 14.0)
+  - Nuke (~> 9.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - Moya
+    - Nuke
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  Nuke: 6f400a4ea957e09149ec335a3c6acdcc814d89e4
 
-PODFILE CHECKSUM: f9c5401c11ebf0a7978d619d9acc265c5b59fda0
+PODFILE CHECKSUM: d8981308e32c5efc0191f7def28ebba2350b3908
 
 COCOAPODS: 1.10.1

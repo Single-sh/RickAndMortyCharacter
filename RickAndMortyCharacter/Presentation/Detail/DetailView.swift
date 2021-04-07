@@ -60,17 +60,27 @@ class DetailView: UIView {
       headStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
     ])
     headStack.addArrangedSubview(imageView)
-    headStack.spacing = 5
+    headStack.spacing = 20
     headStack.distribution = .fillEqually
+    headStack.isLayoutMarginsRelativeArrangement = true
+    headStack.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+    let view = UIView()
     let textStack = UIStackView()
     textStack.axis = .vertical
-    headStack.addArrangedSubview(textStack)
+    headStack.addArrangedSubview(view)
+    view.addSubview(textStack)
+    textStack.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      textStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      textStack.rightAnchor.constraint(equalTo: view.rightAnchor),
+      textStack.topAnchor.constraint(equalTo: view.topAnchor)
+    ])
     textStack.spacing = 5
     textStack.addArrangedSubview(nameLabel)
     textStack.addArrangedSubview(statusLabel)
     textStack.addArrangedSubview(genderLabel)
     textStack.addArrangedSubview(speciesLabel)
-    imageView.contentMode = .scaleAspectFit
+    imageView.contentMode = .scaleAspectFill
     textStack.distribution = .fillEqually
     enableConstraintsForWidth()
   }

@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Nuke
 
 class DetailView: UIView {
   struct Props {
@@ -15,7 +16,7 @@ class DetailView: UIView {
     statusLabel.text = "Status: \(props.status)"
     genderLabel.text = "Gender: \(props.gender)"
     speciesLabel.text = "Species: \(props.species)"
-    imageView.setImage(from: props.imageUrl)
+    Nuke.loadImage(with: URL(string: props.imageUrl)!, into: imageView)
   }
 
   init() {

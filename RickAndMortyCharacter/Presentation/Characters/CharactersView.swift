@@ -45,13 +45,7 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     backgroundColor = .white
     collection.backgroundColor = .clear
     addSubview(collection)
-    collection.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      collection.leadingAnchor.constraint(equalTo: readableContentGuide.leadingAnchor),
-      collection.rightAnchor.constraint(equalTo: readableContentGuide.rightAnchor),
-      collection.topAnchor.constraint(equalTo: topAnchor),
-      collection.bottomAnchor.constraint(equalTo: bottomAnchor)
-    ])
+    collection.fillSuperview()
     collection.register(
       CharacterCollectionViewCell.self,
       forCellWithReuseIdentifier: String(describing: CharacterCollectionViewCell.self)
@@ -88,9 +82,9 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    let columns: CGFloat = traitCollection.horizontalSizeClass == .compact ? 3 : 5
-    let width = collection.frame.width / columns
-    let height = width + (width / 100 * 30)
+    let columns: CGFloat = traitCollection.horizontalSizeClass == .compact ? 2 : 4
+    let width = (collection.bounds.width - columns * cellSpace - cellSpace) / columns
+    let height = width + (width / 100 * 10)
     return .init(width: width, height: height)
   }
 
@@ -121,8 +115,7 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let currentOffset = scrollView.contentOffset.y
     let height = scrollView.contentSize.height - scrollView.frame.size.height
-    let maxScroll = height / 100 * 80
-    if currentOffset > maxScroll, case let .loaded(info) = props  {
+    if currentOffset > height, case let .loaded(info) = props  {
       info.onLoad?()
     }
   }

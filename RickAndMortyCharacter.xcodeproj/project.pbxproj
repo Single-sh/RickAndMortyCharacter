@@ -26,7 +26,6 @@
 		FAF7F0322618A57500E0B557 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F0312618A57500E0B557 /* BaseViewController.swift */; };
 		FAF7F039261B3B7B00E0B557 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F038261B3B7B00E0B557 /* DetailViewController.swift */; };
 		FAF7F044261B44B600E0B557 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F043261B44B600E0B557 /* DetailView.swift */; };
-		FAF7F049261B6C8600E0B557 /* ExtensionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF7F048261B6C8600E0B557 /* ExtensionImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +77,6 @@
 		FAF7F0312618A57500E0B557 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		FAF7F038261B3B7B00E0B557 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FAF7F043261B44B600E0B557 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		FAF7F048261B6C8600E0B557 /* ExtensionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,7 +235,6 @@
 			children = (
 				FA40C69D2615CD8A00E86BF2 /* ExtensionView.swift */,
 				FAF7F0312618A57500E0B557 /* BaseViewController.swift */,
-				FAF7F048261B6C8600E0B557 /* ExtensionImageView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -452,7 +449,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAF7F049261B6C8600E0B557 /* ExtensionImageView.swift in Sources */,
 				FAF7F039261B3B7B00E0B557 /* DetailViewController.swift in Sources */,
 				FAF7F044261B44B600E0B557 /* DetailView.swift in Sources */,
 				FAF7F02D2618884200E0B557 /* CharactersModel.swift in Sources */,

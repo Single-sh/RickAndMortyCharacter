@@ -3,11 +3,11 @@ import UIKit
 class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
   enum Props {
     case beginLoading
-    case loaded(Info)
+    case loaded(Info, PageType)
 
     struct Info {
       let characters: [CharacterDTO]
-      let onLoad: (() -> Void)?
+      let onLoad: ((PageType) -> Void)?
       let onSelectCell: ((CharacterDTO) -> Void)
     }
   }
@@ -18,8 +18,14 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
   func updateProps(_ props: Props) {
     self.props = props
     switch props {
-    case let .loaded(info):
-      characters += info.characters
+    case let .loaded(info, type):
+      switch type {
+      case .next:
+        characters += info.characters
+      default:
+        characters = info.characters
+        collection.refreshControl?.endRefreshing()
+      }
       collection.reloadData()
     default:
       return
@@ -52,7 +58,18 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
     )
     collection.dataSource = self
     collection.delegate = self
+
+    let refresh = UIRefreshControl()
+    refresh.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+    collection.refreshControl = refresh
   }
+
+  @objc private func onRefresh() {
+    if case let .loaded(info, _) = props  {
+      info.onLoad?(.refresh)
+    }
+  }
+
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     characters.count
@@ -72,7 +89,7 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    if case let .loaded(info) = props  {
+    if case let .loaded(info, _) = props  {
       info.onSelectCell(characters[indexPath.row])
     }
   }
@@ -115,8 +132,8 @@ class CharactersView: UIView, UICollectionViewDataSource, UICollectionViewDelega
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let currentOffset = scrollView.contentOffset.y
     let height = scrollView.contentSize.height - scrollView.frame.size.height
-    if currentOffset > height, case let .loaded(info) = props  {
-      info.onLoad?()
+    if currentOffset > height, case let .loaded(info, _) = props  {
+      info.onLoad?(.next)
     }
   }
 

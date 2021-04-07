@@ -1,8 +1,12 @@
 import Foundation
 import Moya
 
+enum PageType {
+  case refresh
+  case next
+}
 protocol CharactersModelDelegate {
-  func nextPage(completion: @escaping (Result<PageDTO, DescriptionError>) -> ())
+  func nextPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ())
 }
 
 class CharactersModel: CharactersModelDelegate {
@@ -13,8 +17,13 @@ class CharactersModel: CharactersModelDelegate {
     provider = MoyaProvider<RickAndMortyService>()
   }
 
-  func nextPage(completion: @escaping (Result<PageDTO, DescriptionError>) -> ()) {
-    page += 1
+  func nextPage(type: PageType, completion: @escaping (Result<PageDTO, DescriptionError>) -> ()) {
+    switch type {
+    case .next:
+      page += 1
+    default:
+      page = 1
+    }
     provider.request(.getPage(page: page)) { result in
       switch result {
       case let .success(response):

@@ -16,7 +16,7 @@ class CharactersViewController: BaseViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    nextPage()
+    nextPage(.refresh)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -29,24 +29,24 @@ class CharactersViewController: BaseViewController {
     super.viewWillDisappear(animated)
   }
 
-  private func nextPage() {
+  private func nextPage(_ type: PageType) {
     contentView.updateProps(.beginLoading)
-    model.nextPage { [unowned self] result in
+    model.nextPage(type: type) { [unowned self] result in
       switch result {
       case let .success(page):
-        updateView(page: page)
+        updateView(page: page, type: type)
       case let .failure(error):
         print(error.description)
       }
     }
   }
 
-  func updateView(page: PageDTO) {
+  func updateView(page: PageDTO, type: PageType) {
     contentView.updateProps(.loaded(.init(
       characters: page.character,
-      onLoad: page.info.next == nil ? nil : { [unowned self] in
+      onLoad: page.info.next == nil ? nil : { [unowned self] type in
         contentView.updateProps(.beginLoading)
-        nextPage()
+        nextPage(type)
       },
       onSelectCell: { [unowned self] character in
         navigationController?.pushViewController(
@@ -54,7 +54,7 @@ class CharactersViewController: BaseViewController {
           animated: true
         )
       }
-    )))
+    ), type))
   }
 
 }
